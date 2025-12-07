@@ -1,3 +1,4 @@
+import type { Request } from "express";
 export type Status = "success" | "error" | "pending";
 export type Meta = { pagination?: unknown; requestId?: string; [k: string]: unknown };
 
