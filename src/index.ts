@@ -5,9 +5,21 @@ import userRouter from '@repo/routes/user-routes'
 import { toNodeHandler } from "better-auth/node";
 import { auth } from "@repo/lib/auth";
 
+const allowedOrigins = [process.env.WEB_URL] //add other origins here
+
 //app init
 const app = express();
 const port = process.env.PORT || 8000
+app.use(cors({
+    origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+    credentials: true
+}))
 
 app.all('/api/auth/{*any}', toNodeHandler(auth));
 app.use(express.json());
