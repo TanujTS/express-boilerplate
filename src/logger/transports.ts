@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import pino from 'pino';
 import type { LoggerConfig } from './config';
+import { maxSize } from 'better-auth';
 
 /**
  * 
@@ -47,7 +48,7 @@ export function getTransports(config: LoggerConfig) {
                         maxSize: '10M',
                         maxFiles: 5
                     }
-                }
+                },
                 //errors to separate files
                 {
                     level: 'error',
@@ -56,6 +57,32 @@ export function getTransports(config: LoggerConfig) {
                         file: path.join(logsDirectory, 'error.log'),
                         maxSize: '10M',
                         maxFiles: 5
+                    }
+                }
+            ]
+        })
+    }
+    if (isProduction) {
+        return pino.transport({
+            targets: [
+                //all logs to rolling file
+                {
+                    level: 'info',
+                    target: 'pino-rolling-file',
+                    options: {
+                        file: path.join(logsDirectory, 'apps.log'),
+                        maxSize: '10M',
+                        maxFiles: 10
+                    }
+                },
+                //errros to separate rolling file
+                {
+                    level: 'error',
+                    target: 'pino-rolling-file',
+                    options: {
+                        file: path.join(logsDirectory, 'error.log'),
+                        maxSize: '10M',
+                        maxFiles: 10
                     }
                 }
             ]
