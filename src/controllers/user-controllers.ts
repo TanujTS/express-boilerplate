@@ -10,7 +10,7 @@ export const userProfile = asyncHandler(async (req, res) => {
     if (!user) {
         throw new ApiError(401, "Unauthorized");
     }
-    return responseOk(res, user, "Fetched user data.");
+    return responseOk(req, res, user, "Fetched user data.");
 })
 
 export const listUsers = asyncHandler(async (req, res) => {
@@ -19,5 +19,5 @@ export const listUsers = asyncHandler(async (req, res) => {
         throw new ApiError(401, "Auth is required");
     }
     const users = await db.select().from(user);
-    return responseOk(res, users, "Fetched users!");
+    return responseOk(req, res, users, "Fetched users!");
 })

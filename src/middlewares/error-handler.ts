@@ -16,6 +16,7 @@ export function errorHandler(err: unknown, req: Request, res: Response, _next: N
       'API Error'
     )
     return responseFail(
+      req, 
       res,
       err.code,
       err.message,
@@ -27,5 +28,5 @@ export function errorHandler(err: unknown, req: Request, res: Response, _next: N
 
   //log unexpected errors with base logger
   logger.error(err, 'Unexpected error');
-  return responseFail(res, 500, "Internal server error");
+  return responseFail(req, res, 500, "Internal server error");
 }

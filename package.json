@@ -25,6 +25,7 @@
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.45.0",
     "express": "^5.2.1",
-    "pino-http": "^11.0.0"
+    "pino-http": "^11.0.0",
+    "pino-roll": "^4.0.0"
   }
 }
