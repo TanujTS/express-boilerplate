@@ -16,7 +16,7 @@ export const responseOk = <T>(req: AuthRequest, res: Response, data: T, message 
 
 export const responseCreated = <T>(req: AuthRequest, res: Response, data: T, message = "Created", meta?: Meta) => {
   req?.log?.info({
-    statusCode: 200,
+    statusCode: 201,
     resource: typeof data === "object" && data !== null ? (data as any).id : undefined,
     ...(meta && { meta }),
   }, message)
@@ -44,7 +44,7 @@ export const responseFail = (
     `${message} - Error Response`
   )
 
-  res.status(code).json({
+  return res.status(code).json({
     status: "error",
     message,
     error: { message, code: code, details, ...(stack ? { stack } : {}) },

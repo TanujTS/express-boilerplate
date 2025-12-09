@@ -1,4 +1,4 @@
-import { pinoHttp } from "pino-http";
+import pinoHttp from "pino-http";
 import { getLoggerConfig } from "./config";
 import { getTransports } from "./transports";
 import pino from 'pino'
@@ -21,6 +21,10 @@ const baseLogger = pino(
 
 export const httpLogger = pinoHttp({
     logger: baseLogger,
+
+    autoLogging:{
+        ignore: (req) => req.url === '/health'
+    },
 
     //generate unique request ids
     genReqId: (req, res) => {
@@ -66,10 +70,23 @@ export const httpLogger = pinoHttp({
         return `${req.method} ${req.url} - ${res.statusCode} - ${err.message}`
     },
 
+    customAttributeKeys: {
+        req: 'request',
+        res: 'response',
+        err: 'error',
+        responseTime: 'duration'
+    },
+
     //use standard serializers
     serializers: {
-        req: pino.stdSerializers.req,
-        res: pino.stdSerializers.res,
+        req: (req) => ({
+            method: req.method,
+            url: req.url,
+            id: (req as any).id,
+        }),
+        res: (res) => ({
+            statusCode: res.statusCode,
+        }),
         err: pino.stdSerializers.err,
     }
 

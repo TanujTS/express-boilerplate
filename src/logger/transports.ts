@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import pino from 'pino';
 import type { LoggerConfig } from './config';
-import { maxSize } from 'better-auth';
 
 /**
  * 
@@ -33,16 +32,15 @@ export function getTransports(config: LoggerConfig) {
                     options:  {
                         colorize: true,
                         translateTime: 'SYS:standard',
-                        ignore: 'pid, hostname',
-                        messageFormat: '{levelLabel} - {msg}',
-                        singleLine: false,
-                        messageKey: 'msg'
+                        ignore: 'pid, hostname, request, response',
+                        messageFormat: '  {levelLabel} | {method} {url} | {msg}',
+                        singleLine: true,
                     }
                 },
                 //all logs to file
                 {
                     level: 'debug',
-                    target: 'pino-rolling-file',
+                    target: 'pino-roll',
                     options: {
                         file: path.join(logsDirectory, 'app.log'),
                         maxSize: '10M',
@@ -52,7 +50,7 @@ export function getTransports(config: LoggerConfig) {
                 //errors to separate files
                 {
                     level: 'error',
-                    target: 'pino-rolling-file',
+                    target: 'pino-roll',
                     options: {
                         file: path.join(logsDirectory, 'error.log'),
                         maxSize: '10M',
@@ -68,7 +66,7 @@ export function getTransports(config: LoggerConfig) {
                 //all logs to rolling file
                 {
                     level: 'info',
-                    target: 'pino-rolling-file',
+                    target: 'pino-roll',
                     options: {
                         file: path.join(logsDirectory, 'apps.log'),
                         maxSize: '10M',
@@ -78,7 +76,7 @@ export function getTransports(config: LoggerConfig) {
                 //errros to separate rolling file
                 {
                     level: 'error',
-                    target: 'pino-rolling-file',
+                    target: 'pino-roll',
                     options: {
                         file: path.join(logsDirectory, 'error.log'),
                         maxSize: '10M',
