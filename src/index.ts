@@ -4,11 +4,9 @@ import { errorHandler } from "./middlewares/error-handler";
 import userRouter from '@repo/routes/user-routes'
 import { toNodeHandler } from "better-auth/node";
 import { auth } from "@repo/lib/auth";
-import pinoHttp from "pino-http";
+import httpLogger from "./logger";
 
 const allowedOrigins = [process.env.WEB_URL] //add other origins here
-
-const logger = pinoHttp();
 
 //app init
 const app = express();
@@ -23,6 +21,8 @@ app.use(cors({
   },
     credentials: true
 }))
+
+app.use(httpLogger);
 
 app.all('/api/auth/{*any}', toNodeHandler(auth));
 app.use(express.json());

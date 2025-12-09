@@ -75,3 +75,14 @@ export const httpLogger = pinoHttp({
 
 });
 
+/**
+ * Base Logger for app-level logging
+ * Usage: logger.info('message;), logger.error(err, 'message') 
+ */
+export const logger = baseLogger
+
+/**
+ * Usage: app.use(httpLogger)
+ */
+export default httpLogger
+
