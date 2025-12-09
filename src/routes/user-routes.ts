@@ -1,9 +1,11 @@
 import { Router } from 'express';
-import { createUser } from '../controllers/user-controllers';
+import { userProfile } from '../controllers/user-controllers';
+import { requireAuth } from '@repo/middlewares/auth-middleware';
 
 const router = Router();
 
-router.post('/create-user', createUser);
+router.use(requireAuth)
+router.get('/', userProfile);
 
 
 export default router
