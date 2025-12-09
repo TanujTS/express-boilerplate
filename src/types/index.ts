@@ -1,7 +1,6 @@
 import type { Request } from "express";
 export type Status = "success" | "error" | "pending";
 export type Meta = { pagination?: unknown; requestId?: string; [k: string]: unknown };
-
 export interface ApiResponseData<T> {
     status: Status,
     message?: string;
@@ -30,6 +29,7 @@ export interface AuthRequest extends Request {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        role: string;
         email: string;
         emailVerified: boolean;
         name: string;

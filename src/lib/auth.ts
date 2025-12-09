@@ -1,6 +1,6 @@
 import { db } from '@repo/db';
 import { account, session, user, verification } from '@repo/db/schema';
-import { betterAuth } from 'better-auth';
+import { betterAuth, string } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 
 
@@ -15,6 +15,14 @@ export const auth = betterAuth({
             account
         }
     }),
+    user: {
+        additionalFields: {
+            role: {
+                type: "string",
+                input: false
+            }
+        }
+    },
     emailAndPassword: {
         enabled: true,
         autoSignIn: true
