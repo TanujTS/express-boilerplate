@@ -2,11 +2,6 @@
 
 A robust and modern boilerplate for building backend applications with Express.js, loaded with essential tools and configurations to jumpstart your development.
 
-## 🚀 Status
-
-![Status](https://img.shields.io/badge/status-active-success.svg)
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-
 ## 📝 Features
 
 -   **Runtime**: [Bun](https://bun.sh) - A fast all-in-one JavaScript runtime.
